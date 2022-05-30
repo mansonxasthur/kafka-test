@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: docker/app
+    volumes:
+      - "./app:/var/www"
+    ports:
+      - "8080:80"
+
+  workers:
+    build:
+      context: docker/app
+    volumes:
+      - "./app:/var/www"
+
+  zookeeper:
+    image: bitnami/zookeeper
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+
+  broker:
+    image: bitnami/kafka
+    user: root
+    volumes:
+      - "./docker/mq/data:/bitnami/kafka"
+    environment:
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper
+      - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=true
+      - ALLOW_PLAINTEXT_LISTENER=yes

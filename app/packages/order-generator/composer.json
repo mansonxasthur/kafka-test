@@ -1,0 +1,36 @@
+{
+    "name": "manson/order-generator",
+    "description": "Generates fake orders",
+    "type": "library",
+    "require": {
+        "fakerphp/faker": "^1.19"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Manson\\OrderGenerator\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Manson\\OrderGenerator\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Mohamed Ibrahim",
+            "email": "mohamed.ibrahim@westore.ai"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Manson\\OrderGenerator\\OrderGeneratorServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev"
+}
