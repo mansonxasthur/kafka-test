@@ -15,7 +15,7 @@ use Manson\OrderGenerator\Contracts\OrderGeneratorInterface;
 
 class ConsumeOrders extends \Illuminate\Console\Command
 {
-    protected $signature = 'consume:orders';
+    protected $signature = 'consume:orders {--service=default}';
     protected $description = 'Consume orders from broker';
     protected BrokerInterface $broker;
 
@@ -39,7 +39,7 @@ class ConsumeOrders extends \Illuminate\Console\Command
                        continue;
                    }
 
-                   $this->info('Order consumed with id (' . $order['id'] . ')');
+                   $this->info('Order consumed with id (' . $order['id'] . ') on service [' . $this->option('service') .']');
                } catch (\Throwable $e) {
                    $this->error($e->getMessage());
                }
