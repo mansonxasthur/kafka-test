@@ -17,7 +17,8 @@ class Consumer implements \App\Services\Brokers\Contracts\ConsumerInterface
     public function __construct(
         protected \RdKafka\KafkaConsumer $consumer
     )
-    {}
+    {
+    }
 
     public function topics(array $topics): ConsumerInterface
     {
@@ -32,9 +33,11 @@ class Consumer implements \App\Services\Brokers\Contracts\ConsumerInterface
         }
         $this->consumer->subscribe($this->topics);
         $message = $this->consumer->consume($timeout);
-        if (!isset($message->payload)) {
-            return [];
-        }
-        return json_decode($message->payload, true);
+
+        return match ($message->err) {
+            RD_KAFKA_RESP_ERR_NO_ERROR       => json_decode($message->payload, true),
+            RD_KAFKA_RESP_ERR__PARTITION_EOF => [],
+            default                          => throw new \Exception($message->errstr(), $message->err),
+        };
     }
 }

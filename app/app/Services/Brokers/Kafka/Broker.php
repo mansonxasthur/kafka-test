@@ -22,8 +22,8 @@ class Broker implements \App\Services\Brokers\Contracts\BrokerInterface
 
     public function producer(): ProducerInterface
     {
+        $this->config->set('metadata.broker.list', implode(',', $this->brokers));
         $producer = new \RdKafka\Producer($this->config);
-        $producer->addBrokers(implode(',', $this->brokers));
         return new Producer($producer);
     }
 

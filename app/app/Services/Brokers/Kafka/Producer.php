@@ -23,12 +23,13 @@ class Producer implements \App\Services\Brokers\Contracts\ProducerInterface
         return $this;
     }
 
-    public function push(string $payload)
+    public function push(string $payload, int $timeout = 1000): void
     {
         if (!$this->topic) {
             throw new \Exception('Missing topic!!');
         }
 
         $this->topic->produce(RD_KAFKA_PARTITION_UA, 0, $payload);
+        $this->producer->flush($timeout);
     }
 }

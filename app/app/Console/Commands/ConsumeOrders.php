@@ -30,7 +30,7 @@ class ConsumeOrders extends \Illuminate\Console\Command
 
     public function handle()
     {
-        $consumer = $this->broker->consumer('orders');
+        $consumer = $this->broker->consumer($this->option('service'));
         $consumer->topics(['created-order']);
            while(true) {
                try {

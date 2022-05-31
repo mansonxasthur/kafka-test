@@ -30,12 +30,12 @@ class MakeOrders extends \Illuminate\Console\Command
 
     public function handle()
     {
-        $producer = $this->broker->producer();
-        $producer->topic('created-order');
            while(true) {
                sleep(rand(1,5));
                try {
                    $order = $this->generator->generate();
+                   $producer = $this->broker->producer();
+                   $producer->topic('created-order');
                    $producer->push((string) $order);
 
                    $this->info('Order pushed with id (' . $order->id() . ')');

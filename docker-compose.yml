@@ -29,3 +29,5 @@ services:
       - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper
       - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=true
       - ALLOW_PLAINTEXT_LISTENER=yes
+    depends_on:
+      - zookeeper
